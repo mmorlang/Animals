@@ -10,7 +10,6 @@ import retrofit2.http.POST;
 public interface AnimalService {
 
   @FormUrlEncoded
-
   @POST("getAnimals")
   Call<List<Animal>> getAnimals(@Field("key") String key);
 
