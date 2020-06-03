@@ -89,6 +89,9 @@ public class ImageFragment extends Fragment {
       } catch (IOException e) {
         Log.e("AnimalService", e.getMessage(), e);
 
+      } catch (Exception e) {
+        Log.e("AnimalService", e.getMessage(), e);
+        throw new RuntimeException(e);
       }
 
     }
