@@ -40,8 +40,8 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
     setupWebView(root);
 
     toolbar = root.findViewById(R.id.toolbar);
+    // TODO set as toolbar of the app
     toolbar.setTitle(R.string.app_name);
-
 
     spinner = root.findViewById(R.id.animals_spinner);
     spinner.setOnItemSelectedListener(this);
@@ -55,18 +55,15 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
     //noinspection ConstantConditions
     viewModel = new ViewModelProvider(getActivity())
         .get(MainViewModel.class);
-    viewModel.getAnimals().observe(getViewLifecycleOwner(), new Observer<List<Animal>>() {
-      @Override
-      public void onChanged(List<Animal> animals) {
-        ImageFragment.this.animals = animals;
-        ArrayAdapter<Animal> adapter = new ArrayAdapter<>(
-            ImageFragment.this.getContext(), R.layout.custom_spinner_item, animals
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-      }
+    viewModel.getAnimals().observe(getViewLifecycleOwner(), (animals) -> {
+      ImageFragment.this.animals = animals;
+      ArrayAdapter<Animal> adapter = new ArrayAdapter<>(
+          ImageFragment.this.getContext(), R.layout.custom_spinner_item, animals
+      );
+      adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      spinner.setAdapter(adapter);
     });
+
   }
 
   private void setupWebView(View root) {
@@ -90,7 +87,6 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
   @Override
   public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
     contentView.loadUrl(animals.get(pos).getUrl());
-
   }
 
   @Override
